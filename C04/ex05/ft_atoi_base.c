@@ -1,106 +1,110 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: doabrour <doabrour@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/25 09:59:50 by doabrour          #+#    #+#             */
+/*   Updated: 2025/07/25 10:05:54 by doabrour         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
-#include <stdio.h>
 
-void    ft_putchar(char c)
+int	len(char *base)
 {
-    write(1, &c, 1);
+	int	lenght;
+
+	lenght = 0;
+	while (base[lenght])
+	{
+		lenght++;
+	}
+	return (lenght);
 }
 
-int len(char *base)
+int	check_duplicate_characters(char *base)
 {
-    int lenght;
+	int		index;
+	int		indexj;
 
-    lenght = 0;
-    while(base[lenght])
-    {
-        lenght++;
-    }
-    return lenght;
+	index = 0;
+	while (base[index])
+	{
+		indexj = index + 1;
+		while (base[indexj])
+		{
+			if (base[indexj] == base[index])
+			{
+				return (0);
+			}
+			indexj++;
+		}
+		index++;
+	}
+	return (1);
 }
 
-int check_duplicate_characters(char *base)
+int	check_operateurs(char *base)
 {
-    int index;
-    int indexj;
+	int		index;
 
-    index = 0;
-    while(base[index])
-    {
-        indexj = index + 1;
-        while(base[indexj])
-        {
-            if(base[indexj] == base[index]){
-                return 0;
-            }
-            indexj++;
-        }
-        index++;
-    }
-    return 1;
+	index = 0;
+	while (base[index])
+	{
+		if (base[index] == '+' || base[index] == '-')
+			return (0);
+		index++;
+	}
+	return (1);
 }
 
-int check_operateurs(char   *base)
+int	find_char(char r, char *base)
 {
-    int index;
+	int		index;
 
-    index = 0;
-    while(base[index])
-    {
-        if(base[index] == '+' || base[index] == '-')
-            return 0;
-        index++;
-    }
-    return 1;
+	index = 0;
+	while (base[index])
+	{
+		if (r == base[index])
+			return (index);
+		index++;
+	}
+	return (-1);
 }
 
-int find_char(char r, char *base)
+int	ft_atoi_base(char *str, char *base)
 {
-    int index;
+	int		sign;
+	int		index;
+	int		nbr;
 
-    index = 0;
-    while(base[index])
-    {
-        if(r == base[index])
-            return index;
-        index++;
-    }
-    return -1;
+	if (check_operateurs(base) == 0 || \
+		check_duplicate_characters(base) == 0 || len(base) < 2)
+		return (0);
+	index = 0;
+	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
+		index++;
+	sign = 1;
+	while (str[index] == '-' || str[index] == '+')
+	{
+		if (str[index] == '-')
+			sign = sign * (-1);
+		index++;
+	}
+	nbr = 0;
+	while (find_char(str[index], base) != -1)
+	{
+		nbr = nbr * len(base);
+		nbr += find_char(str[index], base);
+		index++;
+	}
+	return (nbr * sign);
 }
-
-int ft_atoi_base(char *str, char *base)
-{
-    int sign;
-    int index;
-    int nbr;
-
-    if(check_operateurs(base) == 0 || check_duplicate_characters(base) == 0 || len(base) < 2)
-        return 0;
-    index = 0;
-    while((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
-    {
-        index++;
-    }
-    
-    sign = 1;
-    while(str[index]== '-' || str[index] == '+')
-    {
-        if(str[index] == '-')
-            sign = sign * (-1);
-        index++;
-    }
-    nbr = 0;
-    while(find_char(str[index], base) != -1)
-    {
-        nbr = nbr * len(base);
-        nbr += find_char(str[index], base);
-        index++;
-    }
-    return nbr*sign;
-}
-
-int main(void){
+/*int main(void){
 
     char *str = "       -+539";
     char *base = "0123456789abcdef";
     printf("%d\n", ft_atoi_base(str, base));   
-}
+}*/

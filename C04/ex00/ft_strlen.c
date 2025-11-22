@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: doabrour <doabrour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 15:48:54 by doabrour          #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:17 by doabrour         ###   ########.fr       */
+/*   Created: 2025/07/23 14:10:14 by doabrour          #+#    #+#             */
+/*   Updated: 2025/07/23 14:17:53 by doabrour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+int	ft_strlen(char	*str)
 {
-	int		index;
-	int		*tmp;
+	int	len;
 
-	if (min >= max)
+	len = 0;
+	while (str[len])
 	{
-		*range = NULL;
-		return (0);
+		len++;
 	}
-	tmp = (int *)malloc(sizeof(int) * (max - min));
-	if (tmp == NULL)
-		return (0);
-	index = 0;
-	while (min < max)
-	{
-		tmp[index] = min;
-		min++;
-		index++;
-	}
-	tmp[index] = '\0';
-	*range = tmp;
-	return (index);
+	return (len);
 }
+/*int main(void)
+{
+    char *str;
+    printf("%d\n", ft_strlen(str));
+}*/

@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: doabrour <doabrour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 15:48:54 by doabrour          #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:17 by doabrour         ###   ########.fr       */
+/*   Created: 2025/07/23 14:32:11 by doabrour          #+#    #+#             */
+/*   Updated: 2025/07/23 14:36:07 by doabrour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+void	ft_putstr(char *str)
 {
-	int		index;
-	int		*tmp;
+	int	index;
 
-	if (min >= max)
-	{
-		*range = NULL;
-		return (0);
-	}
-	tmp = (int *)malloc(sizeof(int) * (max - min));
-	if (tmp == NULL)
-		return (0);
 	index = 0;
-	while (min < max)
+	while (str[index])
 	{
-		tmp[index] = min;
-		min++;
+		write(1, &str[index], 1);
 		index++;
 	}
-	tmp[index] = '\0';
-	*range = tmp;
-	return (index);
 }
+/*int main(void)
+{
+    char *str = "hiworld!!";
+    ft_putstr(str);
+}*/

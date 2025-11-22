@@ -1,46 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_range.c                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: doabrour <doabrour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 15:44:17 by doabrour          #+#    #+#             */
-/*   Updated: 2025/08/03 13:04:24 by doabrour         ###   ########.fr       */
+/*   Created: 2025/07/23 14:52:42 by doabrour          #+#    #+#             */
+/*   Updated: 2025/07/25 10:27:05 by doabrour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 
-int	*ft_range(int min, int max)
+int	ft_atoi(char *str)
 {
-	int		*tmp;
+	int		sign;
 	int		index;
+	int		nbr;
 
-	if (min >= max || (min == 0 && max == 0))
-		return (NULL);
-	tmp = (int *)malloc(sizeof(int) * (max - min));
-	if (tmp == NULL)
-		return (NULL);
 	index = 0;
-	while (min < max)
+	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
+		index++;
+	sign = 1;
+	while (str[index] == '-' || str[index] == '+')
 	{
-		tmp[index] = min;
-		min++;
+		if (str[index] == '-')
+			sign = sign * (-1);
 		index++;
 	}
-	tmp[index] = 0;
-	return (tmp);
+	nbr = 0;
+	while (str[index] >= '0' && str[index] <= '9')
+	{
+		nbr = nbr * 10;
+		nbr = nbr + (str[index] - '0');
+		index++;
+	}
+	return (nbr * sign);
 }
 /*int main(void)
 {
-    int min = 4;
-    int max = 10;
-    int i = 0;
-    int *tmp = ft_range(max, min);
-    while(i < (max - min))
-    {
-        printf("%d\n", tmp[i]);
-        i++;
-    }
+    printf("%d\n", ft_atoi(" ---+--+1234ab567"));
 }*/

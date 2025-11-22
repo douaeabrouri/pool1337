@@ -1,38 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: doabrour <doabrour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 15:48:54 by doabrour          #+#    #+#             */
-/*   Updated: 2025/08/03 13:13:17 by doabrour         ###   ########.fr       */
+/*   Created: 2025/07/23 14:37:16 by doabrour          #+#    #+#             */
+/*   Updated: 2025/07/23 14:51:50 by doabrour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+void	ft_putchar(char c)
 {
-	int		index;
-	int		*tmp;
-
-	if (min >= max)
-	{
-		*range = NULL;
-		return (0);
-	}
-	tmp = (int *)malloc(sizeof(int) * (max - min));
-	if (tmp == NULL)
-		return (0);
-	index = 0;
-	while (min < max)
-	{
-		tmp[index] = min;
-		min++;
-		index++;
-	}
-	tmp[index] = '\0';
-	*range = tmp;
-	return (index);
+	write(1, &c, 1);
 }
+
+void	ft_putnbr(int nb)
+{
+	if (nb == INT_MIN)
+	{
+		write(1, "-2147483648", 11);
+	}
+	else if (nb >= 0 && nb <= 9)
+	{
+		nb += '0';
+		ft_putchar(nb);
+	}
+	else if (nb < 0)
+	{
+		ft_putchar('-');
+		nb = nb * (-1);
+		ft_putnbr(nb);
+	}
+	else if (nb >= 10)
+	{
+		ft_putnbr(nb / 10);
+		ft_putchar((nb % 10) + '0');
+	}
+}
+/*int main(void)
+{
+    ft_putnbr(42);
+}*/
